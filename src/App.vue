@@ -4,8 +4,7 @@
   </div>
 </template>
 
-<style>
-</style>
+<style></style>
 
 <script>
 import BasicLayout from "@/layouts/BasicLayout.vue";
