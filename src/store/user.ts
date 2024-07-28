@@ -1,35 +1,20 @@
-// initial state
-const state = () => ({
-  all: [],
-});
-
-// getters
-const getters = {};
-
-// actions
-const actions = {
-  async getAllProducts({ commit }) {
-    const products = await shop.getProducts();
-    commit("setProducts", products);
-  },
-};
-
-// mutations
-const mutations = {
-  setProducts(state, products) {
-    state.all = products;
-  },
-
-  decrementProductInventory(state, { id }) {
-    const product = state.all.find((product) => product.id === id);
-    product.inventory--;
-  },
-};
+import { StoreOptions } from "vuex";
 
 export default {
   namespaced: true,
-  state,
-  getters,
-  actions,
-  mutations,
-};
+  state: () => ({
+    loginUser: {
+      userName: "未登录",
+    },
+  }),
+  actions: {
+    getLoginUser({ commit, state }, payload) {
+      commit("updateUser", { userName: "Dan" });
+    },
+  },
+  mutations: {
+    updateUser(state, payload) {
+      state.loginUser = payload;
+    },
+  },
+} as StoreOptions<any>;

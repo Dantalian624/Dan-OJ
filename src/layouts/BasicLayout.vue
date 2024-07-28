@@ -25,8 +25,8 @@ export default {
 
 <style scoped>
 .header {
-  background: red;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
+  box-shadow: #eee 1px 1px 5px;
 }
 
 .content {
