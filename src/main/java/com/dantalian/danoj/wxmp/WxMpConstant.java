@@ -3,8 +3,8 @@ package com.dantalian.danoj.wxmp;
 /**
  * 微信公众号相关常量
  *
- * @author <a href="https://github.com/lidantalian">程序员鱼皮</a>
- * @from <a href="https://dantalian.icu">编程导航知识星球</a>
+ * @author <a href="https://github.com/Dantalian624">Dantalian</a>
+ * @from <a href="https://github.com/Dantalian624/Dan-OJ">Dan-OJ</a>
  **/
 public class WxMpConstant {
 
