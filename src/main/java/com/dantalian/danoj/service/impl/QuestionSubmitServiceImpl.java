@@ -4,12 +4,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dantalian.danoj.common.ErrorCode;
 import com.dantalian.danoj.exception.BusinessException;
 import com.dantalian.danoj.model.dto.questionsubmit.QuestionSubmitAddRequest;
-import com.dantalian.danoj.model.entity.Post;
+import com.dantalian.danoj.model.entity.Question;
 import com.dantalian.danoj.model.entity.QuestionSubmit;
 import com.dantalian.danoj.model.entity.User;
 import com.dantalian.danoj.model.enums.QuestionSubmitLanguageEnum;
 import com.dantalian.danoj.model.enums.QuestionSubmitStatusEnum;
-import com.dantalian.danoj.service.PostService;
+import com.dantalian.danoj.service.QuestionService;
 import com.dantalian.danoj.service.QuestionSubmitService;
 import com.dantalian.danoj.mapper.QuestionSubmitMapper;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ import javax.annotation.Resource;
 public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper, QuestionSubmit>
     implements QuestionSubmitService{
     @Resource
-    private PostService postService;
+    private QuestionService questionService;
 
     /**
      * 题目提交
@@ -45,8 +45,8 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         }
         Long questionId = questionSubmitAddRequest.getQuestionId();
         // 判断实体是否存在，根据类别获取实体
-        Post post = postService.getById(questionId);
-        if (post == null) {
+        Question question = questionService.getById(questionId);
+        if (question == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
 
