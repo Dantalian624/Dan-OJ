@@ -1,9 +1,18 @@
 package com.dantalian.danoj.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dantalian.danoj.model.dto.question.QuestionQueryRequest;
 import com.dantalian.danoj.model.dto.questionsubmit.QuestionSubmitAddRequest;
+import com.dantalian.danoj.model.dto.questionsubmit.QuestionSubmitQueryRequest;
+import com.dantalian.danoj.model.entity.Question;
 import com.dantalian.danoj.model.entity.QuestionSubmit;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.dantalian.danoj.model.entity.User;
+import com.dantalian.danoj.model.vo.QuestionSubmitVO;
+import com.dantalian.danoj.model.vo.QuestionVO;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
 * @author xtt
@@ -20,5 +29,30 @@ public interface QuestionSubmitService extends IService<QuestionSubmit> {
      */
     long doQuestionSubmit(QuestionSubmitAddRequest questionSubmitAddRequest, User loginUser);
 
+    /**
+     * 获取查询条件
+     *
+     * @param questionSubmitQueryRequest
+     * @return
+     */
+    QueryWrapper<QuestionSubmit> getQueryWrapper(QuestionSubmitQueryRequest questionSubmitQueryRequest);
+
+    /**
+     * 获取题目封装
+     *
+     * @param questionSubmit
+     * @param loginUser
+     * @return
+     */
+    QuestionSubmitVO getQuestionSubmitVO(QuestionSubmit questionSubmit, User loginUser);
+
+    /**
+     * 分页获取题目封装
+     *
+     * @param questionSubmitPage
+     * @param loginUser
+     * @return
+     */
+    Page<QuestionSubmitVO> getQuestionSubmitVOPage(Page<QuestionSubmit> questionSubmitPage, User loginUser);
 
 }

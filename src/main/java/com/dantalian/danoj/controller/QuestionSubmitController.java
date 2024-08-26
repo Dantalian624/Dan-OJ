@@ -1,11 +1,19 @@
 package com.dantalian.danoj.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dantalian.danoj.annotation.AuthCheck;
 import com.dantalian.danoj.common.BaseResponse;
 import com.dantalian.danoj.common.ErrorCode;
 import com.dantalian.danoj.common.ResultUtils;
+import com.dantalian.danoj.constant.UserConstant;
 import com.dantalian.danoj.exception.BusinessException;
+import com.dantalian.danoj.model.dto.question.QuestionQueryRequest;
 import com.dantalian.danoj.model.dto.questionsubmit.QuestionSubmitAddRequest;
+import com.dantalian.danoj.model.dto.questionsubmit.QuestionSubmitQueryRequest;
+import com.dantalian.danoj.model.entity.Question;
+import com.dantalian.danoj.model.entity.QuestionSubmit;
 import com.dantalian.danoj.model.entity.User;
+import com.dantalian.danoj.model.vo.QuestionSubmitVO;
 import com.dantalian.danoj.service.QuestionSubmitService;
 import com.dantalian.danoj.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -53,4 +61,23 @@ public class QuestionSubmitController {
         return ResultUtils.success(questionSubmitId);
     }
 
+    /**
+     * 分页获取题目提交列表（除管理员外，普通用户只能看到非答案、提交代码等公开信息）
+     *
+     * @param questionSubmitQueryRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/list/page")
+    public BaseResponse<Page<QuestionSubmitVO>> listQuestionSbumitByPage(@RequestBody QuestionSubmitQueryRequest questionSubmitQueryRequest,
+                                                                         HttpServletRequest request) {
+        long current = questionSubmitQueryRequest.getCurrent();
+        long size = questionSubmitQueryRequest.getPageSize();
+        // 从数据库中查询原始的题目提交分页信息
+        Page<QuestionSubmit> questionSubmitPage = questionSubmitService.page(new Page<>(current, size),
+                questionSubmitService.getQueryWrapper(questionSubmitQueryRequest));
+        User loginUser = userService.getLoginUser(request);
+        // 返回脱敏信息
+        return ResultUtils.success(questionSubmitService.getQuestionSubmitVOPage(questionSubmitPage, loginUser));
+    }
 }
