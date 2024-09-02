@@ -183,5 +183,16 @@ const onAnswerChange = (value: string) => {
 </script>
 
 <style scoped>
-#addQuestionView {}
+#addQuestionView {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.arco-input-wrapper {
+    max-width: 640px;
+}
+
+.arco-input-tag {
+    max-width: 640px;
+}
 </style>
