@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dantalian.danoj.common.ErrorCode;
 import com.dantalian.danoj.constant.CommonConstant;
 import com.dantalian.danoj.exception.BusinessException;
-import com.dantalian.danoj.model.dto.question.QuestionQueryRequest;
+import com.dantalian.danoj.judge.JudgeService;
 import com.dantalian.danoj.model.dto.questionsubmit.QuestionSubmitAddRequest;
 import com.dantalian.danoj.model.dto.questionsubmit.QuestionSubmitQueryRequest;
 import com.dantalian.danoj.model.entity.Question;
@@ -15,8 +15,6 @@ import com.dantalian.danoj.model.entity.User;
 import com.dantalian.danoj.model.enums.QuestionSubmitLanguageEnum;
 import com.dantalian.danoj.model.enums.QuestionSubmitStatusEnum;
 import com.dantalian.danoj.model.vo.QuestionSubmitVO;
-import com.dantalian.danoj.model.vo.QuestionVO;
-import com.dantalian.danoj.model.vo.UserVO;
 import com.dantalian.danoj.service.QuestionService;
 import com.dantalian.danoj.service.QuestionSubmitService;
 import com.dantalian.danoj.mapper.QuestionSubmitMapper;
@@ -25,14 +23,11 @@ import com.dantalian.danoj.utils.SqlUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
@@ -43,11 +38,16 @@ import java.util.stream.Collectors;
 @Service
 public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper, QuestionSubmit>
     implements QuestionSubmitService{
+
     @Resource
     private QuestionService questionService;
 
     @Resource
     private UserService userService;
+
+    @Resource
+    @Lazy
+    private JudgeService judgeService;
 
     /**
      * 题目提交
@@ -83,10 +83,17 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         questionSubmit.setStatus(QuestionSubmitStatusEnum.WAITING.getValue());
         questionSubmit.setJudgeInfo("{}");
         boolean save = this.save(questionSubmit);
+
         if (!save){
             throw new BusinessException(ErrorCode.SYSTEM_ERROR,"数据插入失败");
         }
-        return questionSubmit.getId();
+        Long questionSubmitId = questionSubmit.getId();
+        System.out.println("*****************************************************"+questionSubmitId);
+        // 执行判题服务
+        CompletableFuture.runAsync(()->{
+            judgeService.doJudge(questionSubmitId);
+        });
+        return questionSubmitId;
     }
 
     /**
