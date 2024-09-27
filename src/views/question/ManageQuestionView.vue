@@ -8,8 +8,11 @@
                     <a-button type="primary" @click="doUpdate(record)">修改</a-button>
                     <a-button status="danger" @click="doDelete(record)">删除</a-button>
                 </a-space>
-
             </template>
+            <template #createTime="{ record }">
+                {{ moment(record.createTime).format('YYYY-MM-DD HH:mm:ss') }}
+            </template>
+
         </a-table>
     </div>
 </template>
@@ -20,6 +23,7 @@ import { QuestionControllerService } from '../../../generated/services/QuestionC
 import { onMounted, ref, watchEffect } from 'vue';
 import { Question } from 'generated';
 import { useRouter } from 'vue-router';
+import moment from 'moment';
 
 const dataList = ref([])
 const total = ref(0)
@@ -84,7 +88,7 @@ const columns = [{
     dataIndex: 'userId',
 }, {
     title: '创建时间',
-    dataIndex: 'createTime',
+    slotName: 'createTime',
 }, {
     title: '操作',
     slotName: 'optional'
@@ -121,5 +125,8 @@ const doUpdate = (question: Question) => {
 </script>
 
 <style scoped>
-#manageQuestionView {}
+#manageQuestionView {
+    max-width: 1600px;
+    margin: 0 auto;
+}
 </style>

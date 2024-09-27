@@ -7,13 +7,13 @@
                         <a-card :title="question?.title">
                             <a-descriptions title="判题条件" :column="{ xs: 1, md: 2, lg: 3 }">
                                 <a-descriptions-item label="时间限制">
-                                    {{ question?.judgeConfig?.timeLimit }}
+                                    {{ question?.judgeConfig?.timeLimit }} ms
                                 </a-descriptions-item>
                                 <a-descriptions-item label="内存限制">
-                                    {{ question?.judgeConfig?.memoryLimit }}
+                                    {{ question?.judgeConfig?.memoryLimit }} KB
                                 </a-descriptions-item>
                                 <a-descriptions-item label="堆栈限制">
-                                    {{ question?.judgeConfig?.stackLimit }}
+                                    {{ question?.judgeConfig?.stackLimit }} KB
                                 </a-descriptions-item>
                             </a-descriptions>
                             <a-divider />
@@ -80,7 +80,7 @@
 import message from '@arco-design/web-vue/es/message';
 import { QuestionControllerService } from '../../../generated/services/QuestionControllerService';
 import { onMounted, ref } from 'vue';
-import { QuestionSubmitAddRequest, QuestionSubmitControllerService, QuestionVO } from '../../../generated';
+import { QuestionSubmitAddRequest, QuestionVO } from '../../../generated';
 import CodeEditor from '@/components/CodeEditor.vue';
 import MdViewer from '@/components/MdViewer.vue';
 
@@ -117,7 +117,7 @@ const doSubmit = async () => {
     if (!question.value?.id) {
         return
     }
-    const res = await QuestionSubmitControllerService.doQuestionSubmitUsingPost({
+    const res = await QuestionControllerService.doQuestionSubmitUsingPost({
         ...form.value,
         questionId: question.value?.id
     })

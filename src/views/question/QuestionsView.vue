@@ -128,7 +128,7 @@ const doSubmit = () => {
 
 <style scoped>
 #questionsView {
-    max-width: 1280px;
+    max-width: 1300px;
     margin: 0 auto;
 }
 </style>

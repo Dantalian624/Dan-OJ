@@ -1,6 +1,12 @@
 # oj_frontend
 前端项目
 
+## 根据后台生成代码
+```
+node node_modules/openapi-typescript-codegen/bin/index.js --input http://localhost:8121/api/v2/api-docs --output ./generated --client axios
+```
+
+
 ## Project setup
 ```
 npm install
