@@ -1,4 +1,4 @@
-package com.dantalian.danoj.model.dto.questionsubmit;
+package com.dantalian.danoj.judge.codesandbox.model;
 
 import lombok.Data;
 

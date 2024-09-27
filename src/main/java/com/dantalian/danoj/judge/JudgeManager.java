@@ -4,7 +4,7 @@ import com.dantalian.danoj.judge.strategy.DefaultJudgeStrategy;
 import com.dantalian.danoj.judge.strategy.JavaLanguageJudgeStrategy;
 import com.dantalian.danoj.judge.strategy.JudgeContext;
 import com.dantalian.danoj.judge.strategy.JudgeStrategy;
-import com.dantalian.danoj.model.dto.questionsubmit.JudgeInfo;
+import com.dantalian.danoj.judge.codesandbox.model.JudgeInfo;
 import com.dantalian.danoj.model.entity.QuestionSubmit;
 import org.springframework.stereotype.Service;
 

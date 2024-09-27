@@ -3,9 +3,8 @@ package com.dantalian.danoj.judge.codesandbox.impl;
 import com.dantalian.danoj.judge.codesandbox.CodeSandbox;
 import com.dantalian.danoj.judge.codesandbox.model.ExecuteCodeRequest;
 import com.dantalian.danoj.judge.codesandbox.model.ExecuteCodeResponse;
-import com.dantalian.danoj.model.dto.questionsubmit.JudgeInfo;
+import com.dantalian.danoj.judge.codesandbox.model.JudgeInfo;
 import com.dantalian.danoj.model.enums.JudgeInfoMessageEnum;
-import com.dantalian.danoj.model.enums.QuestionSubmitLanguageEnum;
 import com.dantalian.danoj.model.enums.QuestionSubmitStatusEnum;
 
 import java.util.List;

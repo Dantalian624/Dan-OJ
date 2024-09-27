@@ -1,6 +1,5 @@
 package com.dantalian.danoj.model.dto.question;
 
-import com.dantalian.danoj.model.dto.questionsubmit.JudgeInfo;
 import lombok.Data;
 
 import java.io.Serializable;

@@ -1,6 +1,5 @@
 package com.dantalian.danoj.judge.codesandbox.model;
 
-import com.dantalian.danoj.model.dto.questionsubmit.JudgeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,12 +1,11 @@
 package com.dantalian.danoj.judge.strategy;
 
 import com.dantalian.danoj.model.dto.question.JudgeCase;
-import com.dantalian.danoj.model.dto.questionsubmit.JudgeInfo;
+import com.dantalian.danoj.judge.codesandbox.model.JudgeInfo;
 import com.dantalian.danoj.model.entity.Question;
 import com.dantalian.danoj.model.entity.QuestionSubmit;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

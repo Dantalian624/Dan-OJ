@@ -10,14 +10,12 @@ import com.dantalian.danoj.judge.codesandbox.model.ExecuteCodeRequest;
 import com.dantalian.danoj.judge.codesandbox.model.ExecuteCodeResponse;
 import com.dantalian.danoj.judge.strategy.JudgeContext;
 import com.dantalian.danoj.model.dto.question.JudgeCase;
-import com.dantalian.danoj.model.dto.questionsubmit.JudgeInfo;
+import com.dantalian.danoj.judge.codesandbox.model.JudgeInfo;
 import com.dantalian.danoj.model.entity.Question;
 import com.dantalian.danoj.model.entity.QuestionSubmit;
 import com.dantalian.danoj.model.enums.QuestionSubmitStatusEnum;
 import com.dantalian.danoj.service.QuestionService;
 import com.dantalian.danoj.service.QuestionSubmitService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -89,7 +87,6 @@ public class JudgeServiceImpl implements JudgeService {
         judgeContext.setQuestion(question);
         judgeContext.setQuestionSubmit(questionSubmit);
         JudgeInfo judgeInfo = judgeManager.dojudge(judgeContext);
-        System.out.println("*************************************************"+judgeInfo);
         // 修改数据库中的判题结果
         questionSubmitUpdate = new QuestionSubmit();
         questionSubmitUpdate.setId(questionSubmitId);

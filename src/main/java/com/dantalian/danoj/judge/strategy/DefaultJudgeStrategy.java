@@ -3,11 +3,12 @@ package com.dantalian.danoj.judge.strategy;
 import cn.hutool.json.JSONUtil;
 import com.dantalian.danoj.model.dto.question.JudgeCase;
 import com.dantalian.danoj.model.dto.question.JudgeConfig;
-import com.dantalian.danoj.model.dto.questionsubmit.JudgeInfo;
+import com.dantalian.danoj.judge.codesandbox.model.JudgeInfo;
 import com.dantalian.danoj.model.entity.Question;
 import com.dantalian.danoj.model.enums.JudgeInfoMessageEnum;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 默认判题策略
@@ -22,8 +23,8 @@ public class DefaultJudgeStrategy implements JudgeStrategy {
     public JudgeInfo dojudge(JudgeContext judgeContext) {
 
         JudgeInfo judgeInfo = judgeContext.getJudgeInfo();
-        Long memory = judgeInfo.getMemory();
-        Long time = judgeInfo.getTime();
+        Long memory = Optional.ofNullable(judgeInfo.getMemory()).orElse(0L);
+        Long time = Optional.ofNullable(judgeInfo.getTime()).orElse(0L);
         List<String> inputList = judgeContext.getInputList();
         List<String> outputList = judgeContext.getOutputList();
         Question question = judgeContext.getQuestion();

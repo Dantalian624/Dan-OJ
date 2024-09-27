@@ -2,7 +2,7 @@ package com.dantalian.danoj.model.vo;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.dantalian.danoj.model.dto.questionsubmit.JudgeInfo;
+import com.dantalian.danoj.judge.codesandbox.model.JudgeInfo;
 import com.dantalian.danoj.model.entity.QuestionSubmit;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;

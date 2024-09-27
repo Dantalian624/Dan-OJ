@@ -3,11 +3,12 @@ package com.dantalian.danoj.judge.strategy;
 import cn.hutool.json.JSONUtil;
 import com.dantalian.danoj.model.dto.question.JudgeCase;
 import com.dantalian.danoj.model.dto.question.JudgeConfig;
-import com.dantalian.danoj.model.dto.questionsubmit.JudgeInfo;
+import com.dantalian.danoj.judge.codesandbox.model.JudgeInfo;
 import com.dantalian.danoj.model.entity.Question;
 import com.dantalian.danoj.model.enums.JudgeInfoMessageEnum;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Java 程序的判题策略
@@ -20,20 +21,28 @@ public class JavaLanguageJudgeStrategy implements JudgeStrategy {
      */
     @Override
     public JudgeInfo dojudge(JudgeContext judgeContext) {
-
+        JudgeInfo judgeInfoResponse = new JudgeInfo();
+        JudgeInfoMessageEnum judgeInfoMessageEnum = JudgeInfoMessageEnum.ACCEPTED;
         JudgeInfo judgeInfo = judgeContext.getJudgeInfo();
-        Long memory = judgeInfo.getMemory();
-        Long time = judgeInfo.getTime();
+        if(judgeInfo == null){
+            judgeInfoMessageEnum = JudgeInfoMessageEnum.COMPILE_ERROR;
+            judgeInfoResponse.setMessage(judgeInfoMessageEnum.getValue());
+            return judgeInfoResponse;
+        }
+        Long memoryBytes = Optional.ofNullable(judgeInfo.getMemory()).orElse(0L);
+        // 内存单位转换：将字节转换成千字节
+        Long memory = memoryBytes / 1024;
+        Long time = Optional.ofNullable(judgeInfo.getTime()).orElse(0L);
         List<String> inputList = judgeContext.getInputList();
         List<String> outputList = judgeContext.getOutputList();
         Question question = judgeContext.getQuestion();
         List<JudgeCase> judgeCaseList = judgeContext.getJudgeCaseList();
-        JudgeInfo judgeInfoResponse = new JudgeInfo();
+
         judgeInfoResponse.setMemory(memory);
         judgeInfoResponse.setTime(time);
-        JudgeInfoMessageEnum judgeInfoMessageEnum = JudgeInfoMessageEnum.ACCEPTED;
+
         // 先判断沙箱执行的结果输出数量是否和预期输出数量相等
-        if(outputList.size() == inputList.size()){
+        if(outputList.size() != inputList.size()){
             judgeInfoMessageEnum = JudgeInfoMessageEnum.WRONG_ANSWER;
             judgeInfoResponse.setMessage(judgeInfoMessageEnum.getValue());
             return judgeInfoResponse;
@@ -41,7 +50,7 @@ public class JavaLanguageJudgeStrategy implements JudgeStrategy {
         // 依次判断每一项输出和预期输出是否相等
         for(int i=0; i<judgeCaseList.size(); i++){
             JudgeCase judgeCase = judgeCaseList.get(i);
-            if(judgeCase.getOutput().equals(outputList.get(i))){
+            if(!judgeCase.getOutput().equals(outputList.get(i))){
                 judgeInfoMessageEnum = JudgeInfoMessageEnum.WRONG_ANSWER;
                 judgeInfoResponse.setMessage(judgeInfoMessageEnum.getValue());
                 return judgeInfoResponse;
